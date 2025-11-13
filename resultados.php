@@ -13,7 +13,7 @@
     </style>
 </head>
 <body>
-    <h1>📈 Resultados de la Votación</h1>
+    <h1>Resultados de la Votación</h1>
 
 <?php
 // Obtener conteo de votos
@@ -34,32 +34,64 @@ while ($row = mysqli_fetch_assoc($result)) {
     <script>
         const labels = <?php echo json_encode($combos); ?>;
         const data = <?php echo json_encode($cantidades); ?>;
-
+    
         const ctx = document.getElementById('grafico').getContext('2d');
         const chart = new Chart(ctx, {
             type: 'bar',
             data: {
                 labels: labels,
                 datasets: [{
-                    label: 'Cantidad de votos',
+                    label: '# de votos',
                     data: data,
                     backgroundColor: [
-                        '#4caf50', '#2196f3', '#ff9800', '#e91e63', '#9c27b0', '#f44336'
+                        'rgba(54, 162, 235, 0.3)',   // azul claro
+                        'rgba(255, 99, 132, 0.3)',   // rojo claro
+                        'rgba(255, 206, 86, 0.3)',   // amarillo
+                        'rgba(75, 192, 192, 0.3)',   // verde agua
+                        'rgba(153, 102, 255, 0.3)',  // violeta
+                        'rgba(255, 159, 64, 0.3)'    // naranja
+                    ],
+                    borderColor: [
+                        'rgba(54, 162, 235, 1)',
+                        'rgba(255, 99, 132, 1)',
+                        'rgba(255, 206, 86, 1)',
+                        'rgba(75, 192, 192, 1)',
+                        'rgba(153, 102, 255, 1)',
+                        'rgba(255, 159, 64, 1)'
                     ],
                     borderWidth: 1
                 }]
             },
             options: {
+                responsive: true,
+                plugins: {
+                    legend: {
+                        labels: { color: '#555' },
+                        position: 'top'
+                    },
+                    title: {
+                        display: false
+                    }
+                },
                 scales: {
-                    y: { beginAtZero: true, ticks: { stepSize: 1 } }
+                    y: {
+                        beginAtZero: true,
+                        grid: { color: 'rgba(0,0,0,0.05)' },
+                        ticks: { color: '#555', stepSize: 2 }
+                    },
+                    x: {
+                        grid: { color: 'rgba(0,0,0,0.05)' },
+                        ticks: { color: '#555' }
+                    }
                 }
             }
         });
-
-        
+    
+        // Actualizar gráfico cada 5 segundos
         setInterval(() => location.reload(), 5000);
     </script>
 
     <p><a href="index.php">Volver al formulario</a></p>
 </body>
 </html>
+
